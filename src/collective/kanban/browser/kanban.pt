@@ -35,6 +35,7 @@
     <metal:header use-macro="trackerheader"></metal:header>
   </tal:header>
 
+  <div id="issue-template" style="display: none" tal:content="view/getIssueTemplate" />
   <tal:release tal:repeat="release view/releases">
     <h1 tal:condition="release"
         tal:attributes="class python:release==currentRelease and 'release-current' or '';">

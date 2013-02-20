@@ -1,12 +1,12 @@
+from string import Template
+
 from zope.interface import implements
 from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.app.layout.globals.interfaces import IViewView
 from Products.Poi.browser.tracker import IssueFolderView
 
-from json import JSONEncoder
-
-from string import Template
+from json import JSONEncoder, dumps
 
 
 def json(method):
@@ -30,17 +30,7 @@ class Kanban(IssueFolderView):
 
     index = ViewPageTemplateFile('kanban.pt')
 
-    def getOpenStates(self):
-        raise NotImplementedError
-
-    def getOrderedWorkflowStates(self):
-        raise NotImplementedError
-
-    def getStates(self):
-        raise NotImplementedError
-
-    def getIssueTemplate(self):
-        issue_template = """
+    issue_template = Template("""
 <div data-allowedstates="$allowedstates" id="issue-$issue" draggable="true" class="issue">
   <div class="issue-inner issue-type-$type" data-issue="$issue">
   <a href="$issue" class="issue-num">#$issue</a>
@@ -51,13 +41,23 @@ class Kanban(IssueFolderView):
   <span class="complexity">$complexity</span>
   <span class="owner">$owner</span>
   </div>
-</div>"""
-        return issue_template
+</div>""")
+
+    def getOpenStates(self):
+        raise NotImplementedError
+
+    def getOrderedWorkflowStates(self):
+        raise NotImplementedError
+
+    def getStates(self):
+        raise NotImplementedError
+
+    def getIssueTemplate(self):
+        return dumps(self.issue_template.template)
 
     def renderIssue(self, issue):
         infos = self.getIssueInfos(issue.getObject())
-        issue_template = self.getIssueTemplate()
-        return Template(issue_template).safe_substitute(infos)
+        return self.issue_template.safe_substitute(infos)
 
     def getIssueInfos(self, issue):
         raise NotImplementedError

@@ -2,18 +2,6 @@
 // Setting getData('text', value) will actually set types[0]='text/plain' in FF and Chrome!
 var issueDNDType = 'text/x-issue'; // set this to something specific to your site
 
-var issue_template = ['<div data-allowedstates="$allowedstates" id="issue-$issue" draggable="true" class="issue">',
-  '<div class="issue-inner issue-type-$type" data-issue="$issue">',
-  '<a href="$issue" class="issue-num">#$issue</a>',
-  '<span class="issue-actions">',
-    '<a href="$issue/edit" target="_blank"><img src="edit.gif"></a>',
-  '</span>',
-  '<p class="issue-title">$title</p>',
-  '<span class="complexity">$complexity</span>',
-  '<span class="owner">$owner</span>',
-  '</div>',
-'</div>'].join('\n');
-
 var issue_overlay_params = {
     subtype: 'ajax',
     filter: '.documentFirstHeading,.modification-info,.issue-details,.steps-to-reproduce,.issue-attachment,.issue-referencedoc,.issue-tasks,.response-reply,.response-clarification,.response-additional'};
@@ -195,7 +183,12 @@ function move_and_update_issue(issue, data, column) {
           ).parent().css({transform: "scale(1.0)"});
 }
 
+var issue_template = null;
+
 function create_issue(data, column) {
+  if (!issue_template) {
+      issue_template = JSON.parse($('#issue-template').html());
+  }
   html = issue_template.replace(/\$([a-z]+)/gi, function(match) {
     match = match.replace('$', '');
     return (data[match])
