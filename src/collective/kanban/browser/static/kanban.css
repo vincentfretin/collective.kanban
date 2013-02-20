@@ -1,0 +1,151 @@
+/* table, .area is the row, .column are the colums */
+.area {
+  display: table;
+  border-collapse: collapse;
+  margin: 0.5em;
+}
+
+.column {
+  width: 230px;
+  margin: 5px;
+  border: 1px solid black;
+  display: table-cell;
+}
+
+/* issue style */
+.issue {
+}
+.issue-inner {
+  margin: 0.5em;
+  padding: 0.3em;
+  background-color: yellow;
+  border: 1px solid black;
+  cursor: move;
+  height: 8em;
+  position: relative;
+}
+
+.issue-title {
+  font-weight: bold;
+}
+
+.issue-actions {
+  position: absolute;
+  top: 0.3em;
+  right: 0.3em;
+}
+
+.owner {
+  position: absolute;
+  bottom: 0.3em;
+  left: 0.3em;
+}
+
+.complexity {
+  position: absolute;
+  bottom: 0.3em;
+  right: 0.3em;
+}
+
+/* override color for issue type bug */
+.issue-type-bug {
+  background-color: orange;
+}
+
+/* colors for allowed, not allowed and over column states */
+#kanban .dnd-over {
+  background: #ff3838; /* red */
+}
+
+#kanban .dnd-over.dnd-allowed {
+  background: #96ff96;
+}
+
+.dnd-allowed {
+  background: #EEE;
+}
+
+.dnd-not-allowed {
+  background: #ff3838; /* red */
+}
+
+/* selected issue with ctrl or shift */
+.issue-selected .issue-inner {
+  border: 1px dashed black;
+}
+
+/* progress bar for each release */
+.meter { 
+  height: 20px;
+  position: relative;
+  background: #888;
+}
+
+.meter span {
+  display: block;
+  height: 100%;
+  background-color: rgb(43,194,83);
+  position: relative;
+  overflow: hidden;
+  float: left;
+  text-align: center;
+}
+
+/* common style for area and state column */
+#kanban h2,
+#kanban h3 {
+  background-color: #EEE;
+  color: #E95B2B;
+  border: 1px solid #aaaaaa;
+  font-weight: normal;
+}
+
+/* release */
+#kanban h1 {
+  cursor: pointer;
+}
+
+/* area */
+#kanban h2 {
+  border-width: 1px 1px 1px 1px;
+  cursor: pointer;
+  margin: 0.5em 0px;
+  padding-left: 0.5em;
+}
+
+/* state column */
+#kanban h3 {
+  border-width: 0px 0px 1px 0px;
+  border-color: black;
+  text-align: center;
+  background-color: #888;
+  color: white;
+}
+
+/* the columns are the same colors as the progress bar */
+#kanban .state-work-done h3,
+#kanban .state-resolved h3,
+#kanban .state-tests-ok h3,
+#kanban .state-closed h3 {
+  background-color: rgb(43,194,83);
+}
+
+#kanban .state-in-progress h3,
+.meter span.in-progress {
+  background-color: orange;
+}
+
+/* remove edit and delete actions on issue comments, it doesn't work in overlay */
+.response-actions {
+  display: none;
+}
+
+@keyframes animated_div
+{
+  0%{transform: rotate(0deg); background: orange;}
+  20%{transform: rotate(10deg); background: orange;}
+  40%{transform: rotate(-10deg); background: orange;}
+  60%{transform: rotate(10deg); background: orange;}
+  80%{transform: rotate(-10deg); background: orange;}
+  100%{transform: rotate(0deg);}
+}

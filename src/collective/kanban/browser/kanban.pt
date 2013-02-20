@@ -1,0 +1,76 @@
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en"
+      lang="en"
+      metal:use-macro="context/main_template/macros/master"
+      i18n:domain="Poi">
+
+    <metal:block fill-slot="top_slot"
+                 tal:define="disable_border python:request.set('disable_border',1);
+                             disable_column_one python:request.set('disable_plone.leftcolumn',1);
+                             disable_column_two python:request.set('disable_plone.rightcolumn',1);" />
+
+  <head>
+    <metal:css fill-slot="style_slot">
+      <style type="text/css" media="all"
+        tal:content="string:@import url($portal_url/poi.css);"></style>
+      <style type="text/css" media="all"
+        tal:content="string:@import url(${portal_url}/++resource++collective.kanban/kanban.css);"></style>
+      <script tal:attributes="src string:${portal_url}/++resource++collective.kanban/kanban.js"></script>
+    </metal:css>
+ </head>
+ <body>
+<div metal:fill-slot="content-core"
+     tal:define="trackerUrl context/absolute_url;">
+
+  <div tal:define="states context/getIssueWorkflowStates;
+                   releases context/getReleasesVocab;
+                   pas_member context/@@pas_member;
+                   currentRelease here/getCurrentRelease|nothing;
+                   kanbanQueryString python:'@@kanban?state=%s' %
+                     ('&amp;state='.join(view.getStates()),);
+                   mq python:modules['ZTUtils'].make_query;
+                   can_edit python: checkPermission('Modify portal content', context);"
+       id="kanban">
+  <tal:header tal:define="trackerheader context/poi_tracker_view/macros/trackerheader|nothing"
+      tal:condition="trackerheader">
+    <metal:header use-macro="trackerheader"></metal:header>
+  </tal:header>
+
+  <tal:release tal:repeat="release view/releases">
+    <h1 tal:condition="release"
+        tal:attributes="class python:release==currentRelease and 'release-current' or '';">
+      <a target="_blank"
+         tal:attributes="href python:'%s&amp;%s' % (kanbanQueryString, mq(targetRelease=release));"><img src="edit.gif" title="open release in a new window" alt="open"/></a>
+      <span tal:replace="python:releases.getValue(release) or release"/><span/></h1>
+      <div tal:condition="release" class="meter"><span class="done"></span><span class="in-progress"></span></div>
+      <div class="release"
+           tal:attributes="data-release release;
+              style python: len(view.releases) &gt; 1 and 'display:none' or ''">
+      <tal:loop tal:repeat="area view/areas">
+        <h2 tal:condition="area"><span tal:replace="python:context.getWrappedField('availableAreas').lookup(context, area, 'title')"/><span/></h2>
+        <div class="area"
+            tal:attributes="data-area area;"
+            ondrop="drop(event)"
+            ondragover="allowDrop(event)"
+            ondragenter="dragenter(event)"
+            ondragleave="dragleave(event)"
+            ondragstart="drag(event)"
+            ondragend="dragEnd(event)">
+          <div class="column"
+               tal:repeat="column view/columns"
+               tal:attributes="data-state column;
+                               class string:column state-${column}">
+            <h3><span tal:replace="python:states.getValue(column)"/><span/></h3>
+            <tal:issue tal:repeat="issue python:view.issues_by_state[column]">
+            <div tal:condition="python:issue.getArea==area and issue.getTargetRelease == release"
+              tal:replace="structure python: view.renderIssue(issue)" />
+            </tal:issue>
+          </div>
+        </div>
+      </tal:loop>
+    </div>
+  </tal:release>
+  </div>
+</div>
+
+</body>
+</html>

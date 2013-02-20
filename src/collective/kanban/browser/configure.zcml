@@ -4,14 +4,27 @@
     xmlns:plone="http://namespaces.plone.org/plone"
     i18n_domain="collective.kanban">
 
-    <!-- Set overrides folder for Just-a-Bunch-Of-Templates product -->
-    <include package="z3c.jbot" file="meta.zcml" />
-    <browser:jbot directory="overrides" layer="..interfaces.ICollectiveKanbanLayer" />
-
     <!-- Publish static files -->
     <browser:resourceDirectory
       name="collective.kanban"
       directory="static"
+      />
+
+  <browser:page
+      name="kanban"
+      for="Products.Poi.interfaces.ITracker"
+      permission="zope2.View"
+      class=".kanban.Kanban"
+      allowed_interface="Products.Poi.browser.interfaces.IIssueFolderView"
+      />
+
+  <browser:page
+      name="kanban-change-issue-state"
+      for="Products.Poi.interfaces.ITracker"
+      permission="zope2.View"
+      class=".kanban.Kanban"
+      attribute="changeIssueState"
+      allowed_interface="Products.Poi.browser.interfaces.IIssueFolderView"
       />
 
 </configure>
