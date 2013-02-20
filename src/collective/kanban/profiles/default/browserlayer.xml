@@ -1,0 +1,7 @@
+<?xml version="1.0"?>
+<layers>
+  <layer
+    name="collective.kanban"
+    interface="collective.kanban.interfaces.ICollectiveKanbanLayer"
+  />
+</layers>
