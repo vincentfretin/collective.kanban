@@ -32,7 +32,7 @@ function allowDrop(ev) {
   // Only Opera 12 supports dropzone
   // In Safari 6, types[0] is a dyn... mime type, our issueDNDType is on types[1]
   if (ev.dataTransfer.types === undefined
-      || (ev.dataTransfer.types.indexOf && ev.dataTransfer.types.indexOf(issueDNDType) != -1) 
+      || (ev.dataTransfer.types.indexOf && ev.dataTransfer.types.indexOf(issueDNDType) != -1)
       || (ev.dataTransfer.types.contains && ev.dataTransfer.types.contains(issueDNDType))) {
     ev.preventDefault();
     var column = $(ev.target).closest('.column');
@@ -293,7 +293,7 @@ function update_total() {
   $('#kanban h3').each(function() {
     var res = 0;
     $(this).parent().find('.complexity').each(function() {
-      var v = parseInt($(this).text());
+      var v = parseFloat($(this).text());
       if (!isNaN(v)) {
         res += v;
       }
@@ -304,7 +304,7 @@ function update_total() {
   $('#kanban h2').each(function() {
     var res = 0;
     $(this).next('.area').find('.complexity').each(function() {
-      var v = parseInt($(this).text());
+      var v = parseFloat($(this).text());
       if (!isNaN(v)) {
         res += v;
       }
@@ -318,7 +318,7 @@ function update_total() {
     var release = $(this).next().next('.release');
     var total_issues = release.find('.issue').length;
     release.find('.complexity').each(function() {
-      var v = parseInt($(this).text());
+      var v = parseFloat($(this).text());
       if (!isNaN(v)) {
         res += v;
       }
@@ -330,7 +330,7 @@ function update_total() {
         // work-done resolved tests-ok part
         var total_done = 0;
         release.find('.state-work-done .complexity,.state-resolved .complexity,.state-tests-ok .complexity,.state-closed .complexity').each(function() {
-          var v = parseInt($(this).text());
+          var v = parseFloat($(this).text());
           if (!isNaN(v)) {
             total_done += v;
           }
@@ -340,7 +340,7 @@ function update_total() {
         // in progress part
         var total_done = 0;
         release.find('.state-in-progress .complexity').each(function() {
-          var v = parseInt($(this).text());
+          var v = parseFloat($(this).text());
           if (!isNaN(v)) {
             total_done += v;
           }
@@ -363,7 +363,7 @@ $(document).ready(function(){
   $('#kanban h1').click(function() {
     $(this).next().next(".release").toggle();
   });
-  
+
   $('#kanban h2').click(function() {
     $(this).next(".area").toggle();
   });
