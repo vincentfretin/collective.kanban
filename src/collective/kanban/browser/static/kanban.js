@@ -4,6 +4,7 @@ var issueDNDType = 'text/x-issue'; // set this to something specific to your sit
 
 var issue_overlay_params = {
     subtype: 'ajax',
+    cssclass: 'overlay-kanban',
     filter: '.documentFirstHeading,.modification-info,.issue-details,.steps-to-reproduce,.issue-attachment,.issue-referencedoc,.issue-tasks,.response-reply,.response-clarification,.response-additional'};
 
 function allowDrop(ev) {
