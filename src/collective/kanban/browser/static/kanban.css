@@ -120,6 +120,7 @@
   text-align: center;
   background-color: #888;
   color: white;
+  margin: 0;
 }
 
 /* the columns are the same colors as the progress bar */
