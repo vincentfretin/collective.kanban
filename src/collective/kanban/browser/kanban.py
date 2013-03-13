@@ -62,7 +62,7 @@ class Kanban(IssueFolderView):
     def getIssueInfos(self, issue):
         raise NotImplementedError
 
-    def __call__(self):
+    def update(self):
         self.request.form['sort_on'] = 'created'
         self.request.form['sort_order'] = 'ascending'
         if 'state' not in self.request.form:
@@ -84,9 +84,8 @@ class Kanban(IssueFolderView):
         for issue in issues:
             self.issues_by_state[issue.review_state].append(issue)
 
-        if 'unconfirmed' in self.columns and not self.issues_by_state['unconfirmed']:
-            self.columns.remove('unconfirmed')
-
+    def __call__(self):
+        self.update()
         return self.index()
 
     def _available_transitions(self, issue):
