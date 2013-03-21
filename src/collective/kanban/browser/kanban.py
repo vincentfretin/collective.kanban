@@ -43,7 +43,7 @@ class Kanban(IssueFolderView):
   </div>
 </div>""")
 
-    def getOpenStates(self):
+    def getActiveStates(self):
         raise NotImplementedError
 
     def getOrderedWorkflowStates(self):
@@ -66,7 +66,7 @@ class Kanban(IssueFolderView):
         self.request.form['sort_on'] = 'created'
         self.request.form['sort_order'] = 'ascending'
         if 'state' not in self.request.form:
-            self.request.form['state'] = self.getOpenStates()
+            self.request.form['state'] = self.getActiveStates()
 
         issues = self.getFilteredIssues(**self.request.form)
         self.issues_by_state = {}
