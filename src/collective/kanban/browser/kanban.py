@@ -43,14 +43,11 @@ class Kanban(IssueFolderView):
   </div>
 </div>""")
 
-    def getActiveStates(self):
-        raise NotImplementedError
-
     def getOrderedWorkflowStates(self):
-        raise NotImplementedError
+        return self.getActiveStates()
 
     def getStates(self):
-        raise NotImplementedError
+        return self.getActiveStates()
 
     def getIssueTemplate(self):
         return dumps(self.issue_template.template)
