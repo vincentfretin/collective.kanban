@@ -1,3 +1,5 @@
+# -*- encoding: utf-8 -*-
+
 from string import Template
 
 from zope.interface import implements
@@ -30,7 +32,7 @@ class Kanban(IssueFolderView):
 
     index = ViewPageTemplateFile('kanban.pt')
 
-    issue_template = Template("""
+    issue_template = Template(u"""
 <div data-allowedstates="$allowedstates" id="issue-$issue" draggable="true" class="issue">
   <div class="issue-inner issue-type-$type" data-issue="$issue">
   <a href="$issue" class="issue-num">#$issue</a>
