@@ -19,7 +19,7 @@ long_description = (
 
 setup(
     name='collective.kanban',
-    version='1.0',
+    version='0.1',
     description="Kanban for POI tracker",
     long_description=long_description,
     # Get more from http://pypi.python.org/pypi?%3Aaction=list_classifiers
