@@ -5,7 +5,7 @@ Changelog
 0.2 (unreleased)
 ----------------
 
-- Nothing changed yet.
+- Can be used with default Poi tracker.
 
 
 0.1 (2013-03-27)
