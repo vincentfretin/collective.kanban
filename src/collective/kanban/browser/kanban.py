@@ -5,6 +5,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.app.layout.globals.interfaces import IViewView
 from Products.Poi.browser.tracker import IssueFolderView
+from plone.app.layout.viewlets.common import ViewletBase
 
 from json import JSONEncoder, dumps
 
@@ -161,3 +162,12 @@ class Kanban(IssueFolderView):
             return res
         except Exception as e:
             return {'status': 'ko', 'message': e.args[0]}
+
+
+class KanbanLink(ViewletBase):
+
+    def render(self):
+        return u"""
+        <a style="font-size: 3em;margin-left: 5em;"
+           href="%s/@@kanban">kanban</a>
+           """ % self.context.absolute_url()
