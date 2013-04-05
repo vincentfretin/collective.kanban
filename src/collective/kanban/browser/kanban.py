@@ -45,7 +45,7 @@ class Kanban(IssueFolderView):
 </div>""")
 
     def getActiveStates(self):
-        return ['unconfirmed', 'in-progress', 'open', 'resolved']
+        return ['unconfirmed', 'in-progress', 'open', 'resolved', 'closed']
 
     def getOrderedWorkflowStates(self):
         return self.getActiveStates()
