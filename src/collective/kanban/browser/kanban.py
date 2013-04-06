@@ -37,7 +37,7 @@ class Kanban(IssueFolderView):
   <div class="issue-inner issue-type-$type" data-issue="$issue">
   <a href="$issue" class="issue-num">#$issue</a>
   <span class="issue-actions">
-    <a href="$issue/edit" target="_blank"><img src="edit.gif"></a>
+    <a href="$issue/edit" target="_blank"><img src="edit.png"></a>
   </span>
   <p class="issue-title">$title</p>
   <span class="complexity">$complexity</span>
@@ -56,6 +56,8 @@ class Kanban(IssueFolderView):
 
     def renderIssue(self, issue):
         infos = self.getIssueInfos(issue.getObject())
+        if 'portal_url' not in infos:
+            infos['portal_url'] = self.portal_url
         return self.issue_template.safe_substitute(infos)
 
     def getIssueInfos(self, issue):
@@ -66,7 +68,7 @@ class Kanban(IssueFolderView):
         self.request.form['sort_order'] = 'ascending'
         if 'state' not in self.request.form:
             self.request.form['state'] = self.getActiveStates()
-
+        self.portal_url = getToolByName(self.context, 'portal_url')()
         issues = self.getFilteredIssues(**self.request.form)
         self.issues_by_state = {}
         states = self.request.form.get('state')

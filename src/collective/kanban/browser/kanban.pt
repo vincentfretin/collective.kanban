@@ -40,7 +40,9 @@
     <h1 tal:condition="release"
         tal:attributes="class python:release==currentRelease and 'release-current' or '';">
       <a target="_blank"
-         tal:attributes="href python:'%s&amp;%s' % (kanbanQueryString, mq(targetRelease=release));"><img src="edit.gif" title="open release in a new window" alt="open"/></a>
+         tal:attributes="href python:'%s&amp;%s' % (kanbanQueryString, mq(targetRelease=release));">
+        <img tal:attributes="src string:${view/portal_url}/edit.png" title="open release in a new window" alt="open"/>
+      </a>
       <span tal:replace="python:releases.getValue(release) or release"/><span/></h1>
       <div tal:condition="release" class="meter"><span class="done"></span><span class="in-progress"></span></div>
       <div class="release"
