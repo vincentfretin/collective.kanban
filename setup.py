@@ -19,8 +19,8 @@ long_description = (
 
 setup(
     name='collective.kanban',
-    version='1.0',
-    description="Kanban for POI tracker",
+    version='0.2.dev0',
+    description="Kanban for Poi tracker",
     long_description=long_description,
     # Get more from http://pypi.python.org/pypi?%3Aaction=list_classifiers
     classifiers=[
@@ -41,13 +41,11 @@ setup(
     include_package_data=True,
     zip_safe=False,
     install_requires=[
-        'five.grok',
-        'plone.api',
+        'Products.Poi',
         'setuptools',
     ],
     extras_require={
         'test': [
-            'ecreall.helpers.testing',
             'plone.app.testing',
         ],
     },

@@ -31,7 +31,7 @@ class CollectiveKanbanLayer(PloneSandboxLayer):
     def setUpPloneSite(self, portal):
         """Set up Plone."""
         # Install into Plone site using portal_setup
-        applyProfile(portal, 'collective.kanban:default')
+        #applyProfile(portal, 'collective.kanban:default')
 
         # Login and create some test content
         setRoles(portal, TEST_USER_ID, ['Manager'])

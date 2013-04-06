@@ -27,4 +27,12 @@
       allowed_interface="Products.Poi.browser.interfaces.IIssueFolderView"
       />
 
+  <browser:viewlet
+      name="kanban.link"
+      class=".kanban.KanbanLink"
+      manager="plone.app.layout.viewlets.interfaces.IAboveContentTitle"
+      permission="zope2.View"
+      for="Products.Poi.interfaces.ITracker"
+      />
+
 </configure>

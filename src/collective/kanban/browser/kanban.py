@@ -7,6 +7,7 @@ from Products.CMFCore.utils import getToolByName
 from Products.Five.browser.pagetemplatefile import ViewPageTemplateFile
 from plone.app.layout.globals.interfaces import IViewView
 from Products.Poi.browser.tracker import IssueFolderView
+from plone.app.layout.viewlets.common import ViewletBase
 
 from json import JSONEncoder, dumps
 
@@ -45,6 +46,9 @@ class Kanban(IssueFolderView):
   </div>
 </div>""")
 
+    def getActiveStates(self):
+        return ['unconfirmed', 'in-progress', 'open', 'resolved', 'closed']
+
     def getOrderedWorkflowStates(self):
         return self.getActiveStates()
 
@@ -61,7 +65,21 @@ class Kanban(IssueFolderView):
         return self.issue_template.safe_substitute(infos)
 
     def getIssueInfos(self, issue):
-        raise NotImplementedError
+        wtool = getToolByName(self.context, "portal_workflow")
+        state = wtool.getInfoFor(issue, 'review_state')
+        res = {}
+        res['allowedstates'] = self.availableTargetStates(issue)
+        responsible = issue.getResponsibleManager()
+        pas_member = self.context.restrictedTraverse('@@pas_member');
+        res['owner'] = responsible != '(UNASSIGNED)' and pas_member.info(responsible)['name_or_id'].decode('utf-8') or ''
+        res['issue'] = issue.getId()
+        res['release'] = issue.getTargetRelease().decode('utf-8')
+        res['area'] = issue.getArea()
+        res['state'] = state
+        res['complexity'] = ""
+        res['title'] = issue.Title().decode('utf-8')
+        res['type'] = issue.getIssueType()
+        return res
 
     def update(self):
         self.request.form['sort_on'] = 'created'
@@ -148,3 +166,12 @@ class Kanban(IssueFolderView):
             return res
         except Exception as e:
             return {'status': 'ko', 'message': e.args[0]}
+
+
+class KanbanLink(ViewletBase):
+
+    def render(self):
+        return u"""
+        <a style="font-size: 3em;margin-left: 5em;"
+           href="%s/@@kanban">kanban</a>
+           """ % self.context.absolute_url()

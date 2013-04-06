@@ -5,14 +5,4 @@
 
   <include file="configure.zcml" />
 
-  <include package="ecreall.helpers.testing" />
-
-  <genericsetup:registerProfile
-      name="testing"
-      title="collective.kanban tests"
-      directory="profiles/testing"
-      description="Steps to ease tests of collective.kanban"
-      provides="Products.GenericSetup.interfaces.EXTENSION"
-      />
-
 </configure>
